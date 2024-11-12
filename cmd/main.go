@@ -1,6 +1,9 @@
 package main
 
-import conf "todolist/config"
+import (
+	conf "todolist/config"
+	"todolist/pkg/util"
+)
 
 func main() {
 	loading()
@@ -8,4 +11,5 @@ func main() {
 
 func loading() {
 	conf.Init()
+	util.InitLog()
 }
