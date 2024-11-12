@@ -14,7 +14,7 @@ var (
 	DbHost     string
 	DbPort     string
 	DbUser     string
-	DbPassWord string
+	DbPassword string
 	DbName     string
 
 	RedisDb     string
@@ -29,6 +29,8 @@ func Init() {
 		log.Println("config read err", err)
 	}
 	LoadService(file)
+	LoadMysql(file)
+	LoadRedis(file)
 }
 
 func LoadService(file *ini.File) {
@@ -41,7 +43,7 @@ func LoadMysql(file *ini.File) {
 	DbHost = file.Section("mysql").Key("DbHost").String()
 	DbPort = file.Section("mysql").Key("DbPort").String()
 	DbUser = file.Section("mysql").Key("DbUser").String()
-	DbPassWord = file.Section("mysql").Key("DbPassWord").String()
+	DbPassword = file.Section("mysql").Key("DbPassword").String()
 	DbName = file.Section("mysql").Key("DbName").String()
 }
 
