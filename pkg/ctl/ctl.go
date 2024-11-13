@@ -21,3 +21,17 @@ func RespSuccess(code ...int) *Response {
 	}
 	return r
 }
+
+func RespError(err error, data string, code ...int) *Response {
+	status := e.ERROR
+	if code != nil {
+		status = code[0]
+	}
+	r := &Response{
+		Status: status,
+		Data: data,
+		Msg: e.GetMsg(status),
+		Error: err.Error(),
+	}
+	return r
+}
