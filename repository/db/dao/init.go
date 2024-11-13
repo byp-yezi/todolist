@@ -1,6 +1,7 @@
 package dao
 
 import (
+	"context"
 	"strings"
 	"time"
 
@@ -46,4 +47,9 @@ func MysqlInit() {
 	_db = db
 	// migration()
 	// fmt.Println("数据库迁移成功...")
+}
+
+func NewDBClient(ctx context.Context) *gorm.DB {
+	db := _db
+	return db.WithContext(ctx)
 }

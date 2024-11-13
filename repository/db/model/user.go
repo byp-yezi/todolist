@@ -1,10 +1,10 @@
 package model
 
 import (
-	"todolist/consts"
-
 	"golang.org/x/crypto/bcrypt"
 	"gorm.io/gorm"
+
+	"todolist/consts"
 )
 
 type User struct {
