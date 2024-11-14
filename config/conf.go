@@ -24,12 +24,12 @@ var (
 )
 
 func Init() {
-	file, err := ini.Load("../config/config.ini")
+	file, err := ini.Load("config/config.ini")
 	if err != nil {
 		log.Println("config read err", err)
 		panic(err)
 	}
-	if err := LoadLocales("../config/locales/zh-cn.yaml"); err != nil {
+	if err := LoadLocales("config/locales/zh-cn.yaml"); err != nil {
 		log.Println(err)
 		panic(err)
 	}

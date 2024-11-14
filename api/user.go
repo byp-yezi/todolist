@@ -28,3 +28,21 @@ func UserRegisterHandler() gin.HandlerFunc {
 
 	}
 }
+
+func UserLoginHandler() gin.HandlerFunc {
+	return func(ctx *gin.Context) {
+		var req types.UserServiceReq
+		if err := ctx.ShouldBind(&req); err != nil {
+			util.LogrusObj.Infoln(err)
+			ctx.JSON(http.StatusBadRequest, ErrorResponse(err))
+		} else {
+			l := service.GetUserSrv()
+			resp, err := l.Login(ctx.Request.Context(), &req)
+			if err != nil {
+				ctx.JSON(http.StatusInternalServerError, ErrorResponse(err))
+				return
+			}
+			ctx.JSON(http.StatusOK, resp)
+		}
+	}
+}

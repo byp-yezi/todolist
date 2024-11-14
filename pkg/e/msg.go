@@ -1,9 +1,13 @@
 package e
 
-var MsgFlags = map[int]string {
-	SUCCESS: "操作成功",
-	ERROR: "操作失败",
+var MsgFlags = map[int]string{
+	SUCCESS:       "操作成功",
+	ERROR:         "操作失败",
 	InvalidParams: "请求参数错误",
+
+	ErrorExistUser:               "已存在该用户名",
+	ErrorNotExistUser:            "该用户不存在",
+	ErrorUserOrPasswordIncorrect: "账号或密码不正确",
 }
 
 func GetMsg(code int) string {
