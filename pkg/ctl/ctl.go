@@ -1,6 +1,8 @@
 package ctl
 
-import "todolist/pkg/e"
+import (
+	"todolist/pkg/e"
+)
 
 type Response struct {
 	Status int         `json:"status"`
@@ -16,8 +18,8 @@ func RespSuccess(code ...int) *Response {
 	}
 	r := &Response{
 		Status: status,
-		Data: "操作成功",
-		Msg: e.GetMsg(status),
+		Data:   "操作成功",
+		Msg:    e.GetMsg(status),
 	}
 	return r
 }
@@ -29,9 +31,22 @@ func RespError(err error, data string, code ...int) *Response {
 	}
 	r := &Response{
 		Status: status,
-		Data: data,
-		Msg: e.GetMsg(status),
-		Error: err.Error(),
+		Data:   data,
+		Msg:    e.GetMsg(status),
+		Error:  err.Error(),
+	}
+	return r
+}
+
+func RespSuccessWithData(data interface{}, code ...int) *Response {
+	status := e.SUCCESS
+	if code != nil {
+		status = code[0]
+	}
+	r := &Response{
+		Status: status,
+		Data:   data,
+		Msg:    e.GetMsg(status),
 	}
 	return r
 }

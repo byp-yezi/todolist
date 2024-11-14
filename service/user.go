@@ -64,6 +64,16 @@ func (userSrv *UserSrv) Login(ctx context.Context, req *types.UserServiceReq) (r
 		util.LogrusObj.Infoln(err)
 		return
 	}
-
-	
+	token, err := util.GenerateToken(user.ID, req.UserName)
+	if err != nil {
+		util.LogrusObj.Infoln(err)
+		return
+	}
+	userResp := &types.UserServiceResp{
+		ID: user.ID,
+		UserName: req.UserName,
+		CreateAt: user.CreatedAt.Unix(),
+		Token: token,
+	}
+	return ctl.RespSuccessWithData(userResp), nil
 }
