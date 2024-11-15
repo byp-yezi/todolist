@@ -56,7 +56,7 @@ func (userSrv *UserSrv) Login(ctx context.Context, req *types.UserServiceReq) (r
 	userDao := dao.NewUserDao(ctx)
 	user, err := userDao.FindUserByUserName(req.UserName)
 	if err == gorm.ErrRecordNotFound {
-		err = errors.New(e.GetMsg(e.ErrorExistUser))
+		err = errors.New(e.GetMsg(e.ErrorNotExistUser))
 		return
 	}
 	if !user.CheckPassword(req.Password) {

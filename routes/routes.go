@@ -6,6 +6,7 @@ import (
 	"github.com/gin-gonic/gin"
 
 	"todolist/api"
+	"todolist/middleware"
 )
 
 func NewRoutes() *gin.Engine {
@@ -17,6 +18,13 @@ func NewRoutes() *gin.Engine {
 		})
 		v1.POST("user/register", api.UserRegisterHandler())
 		v1.POST("user/login", api.UserLoginHandler())
+		auth := v1.Group("/")
+		auth.Use(middleware.JWT())
+		{
+			auth.POST("task_create", api.CreateTaskHandler())
+			auth.POST("task_list", api.ListTaskHandler())
+			auth.POST("task_show", api.ShowTaskHandler())
+		}
 	}
 	return r
 }

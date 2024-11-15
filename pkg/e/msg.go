@@ -9,8 +9,8 @@ var MsgFlags = map[int]string{
 	ErrorNotExistUser:            "该用户不存在",
 	ErrorUserOrPasswordIncorrect: "账号或密码不正确",
 
-	ErrorAuthTokenFail:    "Token认证失败",
-	ErrorAuthTokenExpired: "Token已失效",
+	ErrorAuthTokenFail:    "Token认证失败或过期",
+	ErrorAuthNotFound:     "缺少Token",
 }
 
 func GetMsg(code int) string {

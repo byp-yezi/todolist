@@ -27,3 +27,8 @@ func (userDao *UserDao) CreateUser(user *model.User) (err error) {
 	err = userDao.DB.Model(&model.User{}).Create(user).Error
 	return
 }
+
+func (userDao *UserDao) FindUserByUserId(id uint) (user *model.User, err error) {
+	err = userDao.DB.Model(&model.User{}).Where("id=?", id).First(&user).Error
+	return
+}

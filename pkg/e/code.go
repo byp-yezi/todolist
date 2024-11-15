@@ -9,6 +9,6 @@ const (
 	ErrorNotExistUser            = 10003
 	ErrorUserOrPasswordIncorrect = 10004
 
-	ErrorAuthTokenFail = 20001
-	ErrorAuthTokenExpired = 20002
+	ErrorAuthTokenFail    = 20001
+	ErrorAuthNotFound     = 20003
 )

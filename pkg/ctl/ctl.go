@@ -11,6 +11,11 @@ type Response struct {
 	Error  string      `json:"error"`
 }
 
+type DataList struct {
+	Item  interface{} `json:"item"`
+	Total int64       `json:"total"`
+}
+
 func RespSuccess(code ...int) *Response {
 	status := e.SUCCESS
 	if code != nil {
@@ -46,6 +51,22 @@ func RespSuccessWithData(data interface{}, code ...int) *Response {
 	r := &Response{
 		Status: status,
 		Data:   data,
+		Msg:    e.GetMsg(status),
+	}
+	return r
+}
+
+func RespList(item interface{}, total int64, code ...int) *Response {
+	status := e.SUCCESS
+	if code != nil {
+		status = code[0]
+	}
+	r := &Response{
+		Status: status,
+		Data:   DataList{
+			Item: item,
+			Total: total,
+		},
 		Msg:    e.GetMsg(status),
 	}
 	return r
