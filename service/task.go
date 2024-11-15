@@ -10,6 +10,8 @@ import (
 	"todolist/repository/db/dao"
 	"todolist/repository/db/model"
 	"todolist/types"
+
+	"gorm.io/gorm"
 )
 
 var TaskSrvOnce sync.Once
@@ -31,11 +33,11 @@ func (tasksrv *TaskSrv) CreateTask(ctx context.Context, req *types.CreateTaskReq
 		return
 	}
 	task := &model.Task{
-		User: *user,
-		Uid: user.ID,
-		Title: req.Title,
-		Status: req.Status,
-		Content: req.Content,
+		User:      *user,
+		Uid:       user.ID,
+		Title:     req.Title,
+		Status:    req.Status,
+		Content:   req.Content,
 		StartTime: time.Now().Unix(),
 	}
 	err = dao.NewTaskDao(ctx).CreateTask(task)
@@ -55,14 +57,39 @@ func (taskSrv *TaskSrv) ListTask(ctx context.Context, req *types.ListTaskReq, us
 	taskRespList := make([]*types.TaskResp, 0)
 	for _, task := range tasks {
 		taskRespList = append(taskRespList, &types.TaskResp{
-			ID: task.ID,
+			ID:        task.ID,
+			View: task.GetView(),
+			Title:     task.Title,
+			Status:    task.Status,
+			Content:   task.Content,
+			CreatedAt: task.CreatedAt.Unix(),
+			StartTime: task.StartTime,
+			EndTime:   task.EndTime,
+		})
+	}
+	return ctl.RespList(taskRespList, total), nil
+}
+
+func (taskSrv *TaskSrv) ShowTask(ctx context.Context, req *types.ShowTaskReq, userId uint) (resp interface{}, err error) {
+	task, err := dao.NewTaskDao(ctx).ShowTask(req.Id, userId)
+	switch err {
+	case gorm.ErrRecordNotFound:
+		util.LogrusObj.Errorln(err)
+		return
+	case nil:
+		respTask := &types.TaskResp{
+			ID: req.Id,
+			View: task.GetView(),
 			Title: task.Title,
 			Status: task.Status,
 			Content: task.Content,
 			CreatedAt: task.CreatedAt.Unix(),
 			StartTime: task.StartTime,
 			EndTime: task.EndTime,
-		})
+		}
+		task.AddView()
+		return ctl.RespSuccessWithData(respTask), nil
+	default:
+		return
 	}
-	return ctl.RespList(taskRespList, total), nil
 }

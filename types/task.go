@@ -13,6 +13,7 @@ type ListTaskReq struct {
 
 type TaskResp struct {
 	ID uint `json:"id"`
+	View uint64 `json:"view"`
 	Title string `json:"title"`
 	Status int `json:"status"` // 0代办 1已完成
 	Content string `json:"content"`
