@@ -24,6 +24,9 @@ func NewRoutes() *gin.Engine {
 			auth.POST("task_create", api.CreateTaskHandler())
 			auth.POST("task_list", api.ListTaskHandler())
 			auth.POST("task_show", api.ShowTaskHandler())
+			auth.POST("task_update", api.UpdateTaskHandler())
+			auth.POST("task_search", api.SearchTaskHandler())
+			auth.POST("task_delete", api.DeleteTaskHandler())
 		}
 	}
 	return r
