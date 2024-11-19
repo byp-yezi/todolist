@@ -29,10 +29,10 @@ func Init() {
 		log.Println("config read err", err)
 		panic(err)
 	}
-	if err := LoadLocales("config/locales/zh-cn.yaml"); err != nil {
-		log.Println(err)
-		panic(err)
-	}
+	// if err := LoadLocales("config/locales/zh-cn.yaml"); err != nil {
+	// 	log.Println(err)
+	// 	panic(err)
+	// }
 	LoadService(file)
 	LoadMysql(file)
 	LoadRedis(file)
