@@ -34,7 +34,19 @@ func UserLoginHandler() gin.HandlerFunc {
 		var req types.UserServiceReq
 		if err := ctx.ShouldBind(&req); err != nil {
 			util.LogrusObj.Errorln(err)
+			// ctx.JSON(http.StatusBadRequest, ErrorResponse(err))
+			// if err := validator.UserValidator(&req); err != nil {
+			// 	ctx.JSON(http.StatusBadRequest, gin.H{
+			// 		"code": e.InvalidParams,
+			// 		"msg": e.GetMsg(e.InvalidParams),
+			// 		"error": err.Error(),
+			// 	})
+			// 	return
+			// }
+			
 			ctx.JSON(http.StatusBadRequest, ErrorResponse(err))
+			return
+
 		} else {
 			l := service.GetUserSrv()
 			resp, err := l.Login(ctx, &req)

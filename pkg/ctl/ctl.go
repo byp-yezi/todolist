@@ -8,7 +8,7 @@ type Response struct {
 	Status int         `json:"status"`
 	Data   interface{} `json:"data"`
 	Msg    string      `json:"msg"`
-	Error  string      `json:"error"`
+	Error  interface{}      `json:"error"`
 }
 
 type DataList struct {
@@ -29,16 +29,15 @@ func RespSuccess(code ...int) *Response {
 	return r
 }
 
-func RespError(err error, data string, code ...int) *Response {
+func RespError(err interface{}, code ...int) *Response {
 	status := e.ERROR
 	if code != nil {
 		status = code[0]
 	}
 	r := &Response{
 		Status: status,
-		Data:   data,
 		Msg:    e.GetMsg(status),
-		Error:  err.Error(),
+		Error:  err,
 	}
 	return r
 }
